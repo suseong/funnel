@@ -60,6 +60,14 @@ The attitude error function is defined as $\Psi = \frac{1}{2}\text{tr}(I_3 - R_d
 \end{align}
 where $e_R = \frac{1}{2} (R_d^T R-R^T R_d) ^\vee$ and $e_\omega = \omega - R^TR_d\omega_d = \omega - \omega_d^R$.
 
+Actually, $e_R$ could be interpreted in the following way
+\begin{align}
+R^TR_d &= I_3 + \sin\theta \hat{K} + (1+\cos\theta)\hat{K}^2 \nonumber \\
+\hat{e}_R &= \frac{1}{2} (I_3 - \sin\theta \hat{K} + (1+\cos\theta)\hat{K}^2 - I_3 - \sin\theta \hat{K} -(1+\cos\theta)\hat{K}^2) \nonumber \\
+&= \sin\theta\hat{K} \nonumber \\
+e_R &= \sin\theta K \nonumber
+\end{align}
+
 If the angular velocity is designed to be $\omega = -K_Re_R + \omega_d^R$, the error $e_\omega$ becomes as $e_\omega = -K_Re_R$. Also, the attitude error dynamics becomes as
 \begin{equation}
 \dot{\Psi} = -e_R^TK_Re_R. \nonumber
@@ -72,9 +80,21 @@ The error dynamics $\dot{e}_R$ is derived as
 &= C(R^TR_d)e_\omega \nonumber
 \end{align}
 where $C =  \frac{1}{2}(\text{tr}(R^TR_d)I_3 - R^TR_d)$, $\dot{R}_d = R_d\text{S}(\omega_d)$ and $\omega_d^R = R^TR_d\omega_d$. 
+The matrix $C(R^TR_d)$ is further analyzed as follows:
+\begin{align}
+C(R^TR_d) &= (1+2\cos\theta)I_3 - (I_3 + \sin\theta\hat{K} + (1-\cos\theta)\hat{K}^2) \nonumber \\
+&= 2\cos\theta I_3 + \sin\theta\hat{K} + (1-\cos\theta)\hat{K}^2 \nonumber \\
+&= 2\cos\theta I_3 + \hat{e}_R +\frac{1-\cos\theta}{\sin^2\theta}\hat{e}_R^2 \nonumber \\
+&= 2\cos\theta I_3 + \hat{e}_R +\frac{1}{1+\cos\theta}\hat{e}_R^2 \nonumber
+\end{align}
 
-The determinant of $C(R^TR_d) = 4\cos\beta(\cos\beta + 1)$ where $\beta$ is the rotation angle from $R_d$ to $R$.
+In addition, the determinant $\text{det}(C(R^TR_d)) = 4\cos\theta(\cos\theta + 1)$ where $\theta$ is the rotation angle from $R_d$ to $R$.
 
-
+Therefore, the error dynamics $\dot{e}_R$ could be further analyzed by setting $\omega = -K_Re_K + \omega_d^R$ as follows:
+\begin{align}
+\dot{e}_R &= C(R^TR_d)e_\omega \nonumber \\
+&= -C(R^TR_d)K_Re_R \nonumber \\
+&= -(2\cos\theta I_3 + \hat{e}_R + \frac{1}{1+\cos\theta}\hat{e}_R^2)K_Re_R \nonumber
+\end{align}
 
 \end{document}
