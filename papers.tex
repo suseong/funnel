@@ -1,0 +1,80 @@
+\documentclass{article}
+
+\usepackage{graphics} 
+\usepackage{graphicx}
+\usepackage{epsfig} 
+\usepackage{amsmath} 
+\usepackage{amssymb}  
+\usepackage{amsfonts}
+\usepackage{amsmath} 
+%\usepackage{biblatex}
+\usepackage{subfigure}
+
+\begin{document}
+Dynamics of a multirotor
+
+\begin{align}
+\dot{p} &= v \nonumber \\
+m\dot{v} &= mge_3 + TRe_3 \nonumber \\
+\dot{R} &= R\hat{\omega} \nonumber \\
+J\dot{\omega} &= -\omega \times J\omega + \tau. \nonumber 
+\end{align}
+
+Define $X_1 = p$, $X_2 = v$, and errors
+\begin{align}
+e_p &= X_1 - p^r \nonumber \\
+e_v &= X_2 - v^r. \nonumber
+\end{align}
+
+Error dynamics
+\begin{align}
+\dot{e}_p &= v - \dot{p}^r \nonumber \\
+&= e_v \nonumber \\
+\dot{e}_v &= ge_3 + \frac{T}{m}Re_3 - \dot{v}^r. \nonumber 
+\end{align}
+
+The collective thrust $T$ is designed as
+\begin{align}
+n_d &= m(-K_pe_p - K_ve_v -ge_3 + \dot{v}^r) \nonumber \\
+R_de_3 &= \frac{n_d}{|n_d|}  \nonumber \\
+T &= n_d^TRe_3 \nonumber \\
+&= |n_d| (e_3^TR_d^TRe_3). \nonumber
+\end{align}
+
+The error dynamics for $e_v$ with the collective thrust
+\begin{align}
+\dot{e}_v &= ge_3 - \dot{v}^r + \frac{n_d}{m} +\frac{T}{m}Re_3 - \frac{n_d}{m}\nonumber \\
+ &= ge_3 - \dot{v}^r  - K_pe_p - K_ve_v -ge_3 + \dot{v}^r +\frac{T}{m}Re_3 - \frac{n_d}{m} \nonumber  \\
+&= -K_pe_p -K_ve_v  + \frac{1}{m}(n_d^TRe_3)Re_3 -\frac{n_d}{m} \nonumber \\
+&= -K_pe_p-K_ve_v + \frac{|n_d|}{m}\{(e_3^TR_d^TRe_3)Re_3 - R_de_3\}. \nonumber
+\end{align}
+
+The attitude error function is defined as $\Psi = \frac{1}{2}\text{tr}(I_3 - R_d^TR)$, and the dynamics of the error function is 
+\begin{align}
+\Psi &= \frac{1}{2}\text{tr}(I_3 - R_d^TR) \nonumber \\
+\dot{\Psi} &=  -\frac{1}{2}\text{tr}(R_d^TR\hat{e}_\omega) \nonumber \\
+&=  -\frac{1}{4}\text{tr}(-\hat{e}_\omega R^T R_d + R_d^T R \hat{e}_\omega) \nonumber \\
+&= -\frac{1}{4}\text{tr}(\hat{e}_\omega(R_d^TR - R^TR_d)) \nonumber \\
+&= -\frac{1}{2}\text{tr}(\hat{e}_\omega \hat{e}_R) \nonumber \\
+&= e_R^Te_\omega \nonumber 
+\end{align}
+where $e_R = \frac{1}{2} (R_d^T R-R^T R_d) ^\vee$ and $e_\omega = \omega - R^TR_d\omega_d = \omega - \omega_d^R$.
+
+If the angular velocity is designed to be $\omega = -K_Re_R + \omega_d^R$, the error $e_\omega$ becomes as $e_\omega = -K_Re_R$. Also, the attitude error dynamics becomes as
+\begin{equation}
+\dot{\Psi} = -e_R^TK_Re_R. \nonumber
+\end{equation}
+
+The error dynamics $\dot{e}_R$ is derived as
+\begin{align}
+\dot{e}_R &= \frac{1}{2}(R_d^T R \hat{e}_\omega +\hat{e}_\omega R^T R_d)^\vee \nonumber \\
+&= \frac{1}{2}(\text{tr}(R^TR_d)I_3 - R^TR_d)e_\omega \nonumber \\
+&= C(R^TR_d)e_\omega \nonumber
+\end{align}
+where $C =  \frac{1}{2}(\text{tr}(R^TR_d)I_3 - R^TR_d)$, $\dot{R}_d = R_d\text{S}(\omega_d)$ and $\omega_d^R = R^TR_d\omega_d$. 
+
+The determinant of $C(R^TR_d) = 4\cos\beta(\cos\beta + 1)$ where $\beta$ is the rotation angle from $R_d$ to $R$.
+
+
+
+\end{document}
