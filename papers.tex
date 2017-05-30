@@ -94,7 +94,78 @@ Therefore, the error dynamics $\dot{e}_R$ could be further analyzed by setting $
 \begin{align}
 \dot{e}_R &= C(R^TR_d)e_\omega \nonumber \\
 &= -C(R^TR_d)K_Re_R \nonumber \\
-&= -(2\cos\theta I_3 + \hat{e}_R + \frac{1}{1+\cos\theta}\hat{e}_R^2)K_Re_R \nonumber
+    %&= -(2\cos\theta I_3 + \hat{e}_R + \frac{1}{1+\cos\theta}\hat{e}_R^2)K_Re_R \nonumber
+    &= -(\cos\theta I_3 + \frac{1}{2}\{\hat{e}_R - \frac{1}{1+\cos\theta}\hat{e}_R^2\})K_Re_R \nonumber
 \end{align}
+
+If the Lyapunov candidate is set as $V_R = \frac{1}{2}e_R^Te_R$, the directional time derivative of the function becomes:
+\begin{align}
+    \dot{V}_R &= e_R^T\dot{e}_R \nonumber \\
+    &= -e_R^T(\cos\theta I_3 + \frac{1}{2}\{\hat{e}_R - \frac{1}{1+\cos\theta}\hat{e}_R^2\})K_Re_R \nonumber \\
+    &= -\cos\theta \cdot e_R^T K_Re_R \nonumber
+\end{align}
+
+Let me start Lyapunov stability analysis for the whole system.
+\begin{equation}
+    V = \frac{1}{2}\{e_p^TK_pe_p + e_v^Te_v + e_R^Te_R\}+ \alpha e_p^T e_v\nonumber
+\end{equation}
+
+\begin{align}
+    \dot{V} &= e_p^T K_p\dot{e}_p + e_v^T \dot{e}_v + e_R^T \dot{e}_R + \alpha e_p^T \dot{e}_v + \alpha e_v^T \dot{e}_p \nonumber \\
+    &= e_p^T K_pe_v + e_v^T \left\{ -K_pe_p -K_ve_v + \frac{|n_d|}{m}\left[ (e_3^TR_d^TRe_3)Re_3-R_de_3 \right] \right\} -\cos\theta\cdot e_R^T K_R e_R  \nonumber \\
+    &\;\;\;\;+\alpha e_v^T e_v + \alpha e_p^T \left\{ -K_pe_p -K_ve_v + \frac{|n_d|}{m} \left[ (e_3^TR_d^TRe_3)Re_3-R_de_3 \right] \right\}\nonumber \\
+    &< -e_v^T K_v e_v + s^2 \frac{|e_v||n_d|}{m} - c^2 e_R^TK_Re_R + \alpha e_v^T e_v -\alpha e_p^TK_p e_p -\alpha e_p^TK_ve_v +\alpha s^2\frac{|e_p||n_d|}{m} \nonumber \\
+    &< -\alpha e_p^TK_pe_p -e_v^T(K_v-\alpha I_3)e_v - c^2 e_R^T K_R e_R - \alpha e_p^T K_v e_v + s^2\frac{|e_v| + \alpha|e_p|}{m}|n_d| \nonumber \nonumber \\
+    &< -\alpha e_p^TK_pe_p -e_v^T(K_v-\alpha I_3)e_v - c^2 e_R^T K_R e_R - \alpha e_p^T K_v e_v \nonumber \\
+    &\;\;\;\;+ s^2(|e_v| + \alpha|e_p|)(K_p|e_p| + K_v |e_v| + B) \nonumber \\ 
+    &< -\alpha e_p^TK_pe_p -e_v^T(K_v-\alpha I_3)e_v - c^2 e_R^T K_R e_R - \alpha e_p^T K_v e_v \nonumber \\
+    &\;\;\;\;+ \alpha s^2 k_p|e_p|^2 + s^2k_v|e_v|^2 + s^2(\alpha k_v + k_p)|e_p||e_v| + s^2(|e_v| + \alpha|e_p|)B \nonumber \\ 
+    &< e_p^T(-\alpha K_p + \alpha s^2 k_p I_3)e_p + e_v^T(-K_v+(\alpha + s^2 k_v) I_3)e_v - c^2 e_R^T K_R e_R \nonumber \\
+    &\;\;\;\;- \alpha e_p^T K_v e_v + s^2(\alpha k_v + k_p)(\frac{a_1}{2}|e_p|^2 + \frac{a_2}{2}|e_v|^2) + s^2B(\frac{a_3+a_5}{2} + \frac{a_4}{2}|e_v|^2 +\frac{\alpha a_6}{2}|e_p|^2) \nonumber 
+\end{align}
+where $c$ and $s$ are parameters satisfying $c^4 = 1 - e_R^T e_R$ and $s^4 = e_R^Te_R$. Also, $k_v$ and $k_p$ are maximum eigenvalues of $K_v$ and $K_p$, respectively. 
+To satisfy Young's inequality, $a_1a_2 = 1$, $a_3a_4 = 1$, $a_5a_6 = 1$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \end{document}
