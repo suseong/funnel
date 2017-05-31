@@ -126,9 +126,67 @@ where $c$ and $s$ are parameters satisfying $c^4 = 1 - e_R^T e_R$ and $s^4 = e_R
 To satisfy Young's inequality, $a_1a_2 = 1$, $a_3a_4 = 1$, $a_5a_6 = 1$.
 
 \newpage
+By designing proper attitude controller for a multirotor, we can make the attitude error of the multirotor bounded.
+Based on this, the norm of the attitude error could be assumed to be bounded such as $|e_R| \leq E_R$.
+Then, we can evaluate the Lyapunov function only with translational dynamics of the multirotor as follows:
+\begin{equation}
+    V = \frac{1}{2}\left[
+        \begin{array}{cc}
+        e_p^T & e_v^T
+        \end{array}
+        \right] 
+        \left[
+        \begin{array}{cc}
+		P_p & P_{pv} \\ P_{pv}^T & P_v
+        \end{array}
+        \right]
+		\left[
+		\begin{array}{c}
+		e_p \\ e_v
+		\end{array}
+		\right]. \nonumber
+\end{equation}
+Define error vector as $e = [e_p;e_v]$. And the function could be written as $V=\frac{1}{2}e^TPe$.
 
+The directional time derivative is computed as follows:
+\begin{align}
+\dot{V} &= e^TP\dot{e} \nonumber \\
+&= e^TP\left[
+\begin{array}{l}
+e_v \\ -K_pe_p -K_ve_v + \frac{|n_d|}{m}\{(e_3^TR_d^TRe_3)R_de_3-Re_3\} 
+\end{array}
+\right] \nonumber \\
+&= e^TP\left[
+\begin{array}{cc}
+0_{33} & I_3 \\ -K_p & -K_v
+\end{array}
+\right]e + 
+e^TP\left[
+\begin{array}{c}
+0_{31} \\ \frac{|n_d|}{m}\{(e_3^TR_d^TRe_3)R_de_3-Re_3\} 
+\end{array}
+\right] \nonumber \\
+&= e^TPAe + e^T
+\left[
+\begin{array}{c}
+P_{pv} \\ P_v
+\end{array}
+\right]
+|-K_p e_p -K_v e_v - ge_3 + \dot{v}_r|\{(e_3^TR_d^TRe_3)R_de_3-Re_3\} \nonumber \\
+&\leq e^TPAe+ E_R(p_{pv}|e_p|+p_v|e_v|)(k_p|e_p|+k_v|e_v|+B) \nonumber  \\
+&\leq e^TPAe \nonumber \\
+&\;\;\;\;+E_R\{p_{pv}k_p |e_p|^2+(p_{pv}k_v+p_vk_p)|e_p||e_v|+p_vk_v|e_v|^2 +B(p_{pv}|e_p|+p_v|e_v|)\}\nonumber \\
+&\leq e^TPAe \nonumber \\
+&\;\;\;\;+E_R\{p_{pv}k_p|e_p|^2+p_vk_v|e_v|^2\} + E_R\{(p_{pv}k_v+p_vk_p)|e_p||e_v| + B(p_{pv}|e_p|+p_v|e_v|)\} \nonumber \\
+&\leq e^TPAe \nonumber \\
+&\;\;\;\;+E_R\{p_{pv}k_p|e_p|^2+p_vk_v|e_v|^2\} + E_R\{(p_{pv}k_v+p_vk_p)E_pE_v + B(p_{pv}E_p+p_vE_v)\} \nonumber 
+\end{align}
 
-
+Not to make the norm of $e_p$ and $e_v$ too large by applying Young's inequality, I will treat $E_p$ and $E_v$ as the variables satisfying the following constraints
+\begin{align}
+E_p^2 &= e_p^Te_p,\;\;E_p \geq 0 \nonumber \\
+E_v^2 &= e_v^Te_v,\;\;E_v \geq 0 \nonumber
+\end{align}
 
 
 
