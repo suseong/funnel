@@ -174,18 +174,26 @@ P_{pv} \\ P_v
 \right]
 |-K_p e_p -K_v e_v - ge_3 + \dot{v}_r|\{(e_3^TR_d^TRe_3)R_de_3-Re_3\} \nonumber \\
 &\leq e^TPAe+ E_R(p_{pv}|e_p|+p_v|e_v|)(k_p|e_p|+k_v|e_v|+B) \nonumber  \\
-&\leq e^TPAe \nonumber \\
-&\;\;\;\;+E_R\{p_{pv}k_p |e_p|^2+(p_{pv}k_v+p_vk_p)|e_p||e_v|+p_vk_v|e_v|^2 +B(p_{pv}|e_p|+p_v|e_v|)\}\nonumber \\
-&\leq e^TPAe \nonumber \\
-&\;\;\;\;+E_R\{p_{pv}k_p|e_p|^2+p_vk_v|e_v|^2\} + E_R\{(p_{pv}k_v+p_vk_p)|e_p||e_v| + B(p_{pv}|e_p|+p_v|e_v|)\} \nonumber \\
-&\leq e^TPAe \nonumber \\
-&\;\;\;\;+E_R\{p_{pv}k_p|e_p|^2+p_vk_v|e_v|^2\} + E_R\{(p_{pv}k_v+p_vk_p)E_pE_v + B(p_{pv}E_p+p_vE_v)\} \nonumber 
+&\leq e^TPAe+ E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B) \nonumber
+%&\leq e^TPAe \nonumber \\
+%&\;\;\;\;+E_R\{p_{pv}k_p |e_p|^2+(p_{pv}k_v+p_vk_p)|e_p||e_v|+p_vk_v|e_v|^2 +B(p_{pv}|e_p|+p_v|e_v|)\}\nonumber \\
+%&\leq e^TPAe \nonumber \\
+%&\;\;\;\;+E_R\{p_{pv}k_p|e_p|^2+p_vk_v|e_v|^2\} + E_R\{(p_{pv}k_v+p_vk_p)|e_p||e_v| + B(p_{pv}|e_p|+p_v|e_v|)\} \nonumber \\
+%&\leq e^TPAe \nonumber \\
+%&\;\;\;\;+E_R\{p_{pv}k_p|e_p|^2+p_vk_v|e_v|^2\} + E_R\{(p_{pv}k_v+p_vk_p)E_pE_v + B(p_{pv}E_p+p_vE_v)\} \nonumber 
+\end{align}
+where $\bar{e}_p = |e|_p$, $\bar{e}_v = |e|_v$, $B = |ge_3-\dot{v}_r|$, and $E_R = \max|e_R|$.
+
+Not to make the norm of $e_p$ and $e_v$ too large by applying Young's inequality, I will treat $\bar{e}_p$ and $\bar{e}_v$ as the variables satisfying the following constraints
+\begin{align}
+\bar{e}_p^2 &= e_p^Te_p,\;\;\bar{e}_p \geq 0 \nonumber \\
+\bar{e}_v^2 &= e_v^Te_v,\;\;\bar{e}_v \geq 0 \nonumber
 \end{align}
 
-Not to make the norm of $e_p$ and $e_v$ too large by applying Young's inequality, I will treat $E_p$ and $E_v$ as the variables satisfying the following constraints
+Formulate the optimization problem for generating funnel:
 \begin{align}
-E_p^2 &= e_p^Te_p,\;\;E_p \geq 0 \nonumber \\
-E_v^2 &= e_v^Te_v,\;\;E_v \geq 0 \nonumber
+V &= \frac{1}{2}e^Te \nonumber \\
+\dot{V} &= e^T(PA + A^TP)e+ E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B) \nonumber
 \end{align}
 
 
