@@ -150,12 +150,12 @@ Define error vector as $e = [e_p;e_v]$. And the function could be written as $V=
 
 The directional time derivative is computed as follows:
 \begin{align}
-\dot{V} &= e^TP\dot{e} \nonumber \\
+\dot{V} &= e^TP\dot{e} +\frac{1}{2}e^T\dot{P}e\nonumber \\
 &= e^TP\left[
 \begin{array}{l}
 e_v \\ -K_pe_p -K_ve_v + \frac{|n_d|}{m}\{(e_3^TR_d^TRe_3)R_de_3-Re_3\} 
 \end{array}
-\right] \nonumber \\
+\right] +\frac{1}{2}e^T\dot{P}e\nonumber \\
 &= e^TP\left[
 \begin{array}{cc}
 0_{33} & I_3 \\ -K_p & -K_v
@@ -165,16 +165,16 @@ e^TP\left[
 \begin{array}{c}
 0_{31} \\ \frac{|n_d|}{m}\{(e_3^TR_d^TRe_3)R_de_3-Re_3\} 
 \end{array}
-\right] \nonumber \\
-&= e^TPAe + e^T
+\right] +\frac{1}{2}e^T\dot{P}e\nonumber \\
+&= e^TPAe + |-K_p e_p -K_v e_v - ge_3 + \dot{v}_r|e^T
 \left[
 \begin{array}{c}
 P_{pv} \\ P_v
 \end{array}
 \right]
-|-K_p e_p -K_v e_v - ge_3 + \dot{v}_r|\{(e_3^TR_d^TRe_3)R_de_3-Re_3\} \nonumber \\
-&\leq e^TPAe+ E_R(p_{pv}|e_p|+p_v|e_v|)(k_p|e_p|+k_v|e_v|+B) \nonumber  \\
-&\leq e^TPAe+ E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B) \nonumber
+\{(e_3^TR_d^TRe_3)R_de_3-Re_3\} +\frac{1}{2}e^T\dot{P}e\nonumber \\
+&\leq e^TPAe+ E_R(p_{pv}|e_p|+p_v|e_v|)(k_p|e_p|+k_v|e_v|+B)+\frac{1}{2}e^T\dot{P}e \nonumber  \\
+&\leq e^TPAe+ E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B)+\frac{1}{2}e^T\dot{P}e \nonumber
 %&\leq e^TPAe \nonumber \\
 %&\;\;\;\;+E_R\{p_{pv}k_p |e_p|^2+(p_{pv}k_v+p_vk_p)|e_p||e_v|+p_vk_v|e_v|^2 +B(p_{pv}|e_p|+p_v|e_v|)\}\nonumber \\
 %&\leq e^TPAe \nonumber \\
@@ -192,8 +192,8 @@ Not to make the norm of $e_p$ and $e_v$ too large by applying Young's inequality
 
 Formulate the optimization problem for generating funnel:
 \begin{align}
-V &= \frac{1}{2}e^Te \nonumber \\
-\dot{V} &= e^T(PA + A^TP)e+ E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B) \nonumber
+V &= e^TPe,\;\;P = P^T >0 \nonumber \\
+\dot{V} &\leq e^T(PA + A^TP)e+ 2E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B)+e^T\dot{P}e \nonumber
 \end{align}
 
 
