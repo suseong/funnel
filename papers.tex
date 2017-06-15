@@ -48,89 +48,89 @@ The error dynamics for $e_v$ with the collective thrust
 &= -K_pe_p-K_ve_v + \frac{|n_d|}{m}\{(e_3^TR_d^TRe_3)Re_3 - R_de_3\}. \nonumber
 \end{align}
 
-The attitude error function is defined as $\Psi = \frac{1}{2}\text{tr}(I_3 - R_d^TR)$, and the dynamics of the error function is 
-\begin{align}
-\Psi &= \frac{1}{2}\text{tr}(I_3 - R_d^TR) \nonumber \\
-\dot{\Psi} &=  -\frac{1}{2}\text{tr}(R_d^TR\hat{e}_\omega) \nonumber \\
-&=  -\frac{1}{4}\text{tr}(-\hat{e}_\omega R^T R_d + R_d^T R \hat{e}_\omega) \nonumber \\
-&= -\frac{1}{4}\text{tr}(\hat{e}_\omega(R_d^TR - R^TR_d)) \nonumber \\
-&= -\frac{1}{2}\text{tr}(\hat{e}_\omega \hat{e}_R) \nonumber \\
-&= e_R^Te_\omega \nonumber 
-\end{align}
-where $e_R = \frac{1}{2} (R_d^T R-R^T R_d) ^\vee$ and $e_\omega = \omega - R^TR_d\omega_d = \omega - \omega_d^R$.
-
-Actually, $e_R$ could be interpreted in the following way
-\begin{align}
-R^TR_d &= I_3 + \sin\theta \hat{K} + (1-\cos\theta)\hat{K}^2 \nonumber \\
-\hat{e}_R &= \frac{1}{2} (I_3 - \sin\theta \hat{K} + (1-\cos\theta)\hat{K}^2 - I_3 - \sin\theta \hat{K} -(1-\cos\theta)\hat{K}^2) \nonumber \\
-&= -\sin\theta\hat{K} \nonumber \\
-e_R &= -\sin\theta K \nonumber
-\end{align}
-
-If the angular velocity is designed to be $\omega = -K_Re_R + \omega_d^R$, the error $e_\omega$ becomes as $e_\omega = -K_Re_R$. Also, the attitude error dynamics becomes as
-\begin{equation}
-\dot{\Psi} = -e_R^TK_Re_R. \nonumber
-\end{equation}
-
-The error dynamics $\dot{e}_R$ is derived as
-\begin{align}
-\dot{e}_R &= \frac{1}{2}(R_d^T R \hat{e}_\omega +\hat{e}_\omega R^T R_d)^\vee \nonumber \\
-&= \frac{1}{2}(\text{tr}(R^TR_d)I_3 - R^TR_d)e_\omega \nonumber \\
-&= C(R^TR_d)e_\omega \nonumber
-\end{align}
-where $C =  \frac{1}{2}(\text{tr}(R^TR_d)I_3 - R^TR_d)$, $\dot{R}_d = R_d\text{S}(\omega_d)$ and $\omega_d^R = R^TR_d\omega_d$. 
-The matrix $C(R^TR_d)$ is further analyzed as follows:
-\begin{align}
-C(R^TR_d) &= \frac{1}{2}\{(1+2\cos\theta)I_3 - (I_3 + \sin\theta\hat{K} + (1-\cos\theta)\hat{K}^2)\} \nonumber \\
-&= \cos\theta I_3 +\frac{1}{2}\{-\sin\theta\hat{K} - (1-\cos\theta)\hat{K}^2\} \nonumber \\
-&= \cos\theta I_3 +\frac{1}{2}\{ \hat{e}_R -\frac{1-\cos\theta}{\sin^2\theta}\hat{e}_R^2\} \nonumber \\
-&= \cos\theta I_3 +\frac{1}{2}\{ \hat{e}_R -\frac{1}{1+\cos\theta}\hat{e}_R^2\} \nonumber
-\end{align}
-
-In addition, the determinant $\text{det}(C(R^TR_d)) = 4\cos\theta(\cos\theta + 1)$ where $\theta$ is the rotation angle from $R_d$ to $R$.
-
-Therefore, the error dynamics $\dot{e}_R$ could be further analyzed by setting $\omega = -K_Re_K + \omega_d^R$ as follows:
-\begin{align}
-\dot{e}_R &= C(R^TR_d)e_\omega \nonumber \\
-&= -C(R^TR_d)K_Re_R \nonumber \\
-    %&= -(2\cos\theta I_3 + \hat{e}_R + \frac{1}{1+\cos\theta}\hat{e}_R^2)K_Re_R \nonumber
-    &= -(\cos\theta I_3 + \frac{1}{2}\{\hat{e}_R - \frac{1}{1+\cos\theta}\hat{e}_R^2\})K_Re_R \nonumber
-\end{align}
-
-If the Lyapunov candidate is set as $V_R = \frac{1}{2}e_R^Te_R$, the directional time derivative of the function becomes:
-\begin{align}
-    \dot{V}_R &= e_R^T\dot{e}_R \nonumber \\
-    &= -e_R^T(\cos\theta I_3 + \frac{1}{2}\{\hat{e}_R - \frac{1}{1+\cos\theta}\hat{e}_R^2\})K_Re_R \nonumber \\
-    &= -\cos\theta \cdot e_R^T K_Re_R \nonumber
-\end{align}
-
-Let me start Lyapunov stability analysis for the whole system.
-\begin{equation}
-    V = \frac{1}{2}\{e_p^TK_pe_p + e_v^Te_v + e_R^Te_R\}+ \alpha e_p^T e_v\nonumber
-\end{equation}
-
-\begin{align}
-    \dot{V} &= e_p^T K_p\dot{e}_p + e_v^T \dot{e}_v + e_R^T \dot{e}_R + \alpha e_p^T \dot{e}_v + \alpha e_v^T \dot{e}_p \nonumber \\
-    &= e_p^T K_pe_v + e_v^T \left\{ -K_pe_p -K_ve_v + \frac{|n_d|}{m}\left[ (e_3^TR_d^TRe_3)Re_3-R_de_3 \right] \right\} -\cos\theta\cdot e_R^T K_R e_R  \nonumber \\
-    &\;\;\;\;+\alpha e_v^T e_v + \alpha e_p^T \left\{ -K_pe_p -K_ve_v + \frac{|n_d|}{m} \left[ (e_3^TR_d^TRe_3)Re_3-R_de_3 \right] \right\}\nonumber \\
-    &< -e_v^T K_v e_v + s^2 \frac{|e_v||n_d|}{m} - c^2 e_R^TK_Re_R + \alpha e_v^T e_v -\alpha e_p^TK_p e_p -\alpha e_p^TK_ve_v +\alpha s^2\frac{|e_p||n_d|}{m} \nonumber \\
-    &< -\alpha e_p^TK_pe_p -e_v^T(K_v-\alpha I_3)e_v - c^2 e_R^T K_R e_R - \alpha e_p^T K_v e_v + s^2\frac{|e_v| + \alpha|e_p|}{m}|n_d| \nonumber \nonumber \\
-    &< -\alpha e_p^TK_pe_p -e_v^T(K_v-\alpha I_3)e_v - c^2 e_R^T K_R e_R - \alpha e_p^T K_v e_v \nonumber \\
-    &\;\;\;\;+ s^2(|e_v| + \alpha|e_p|)(K_p|e_p| + K_v |e_v| + B) \nonumber \\ 
-    &< -\alpha e_p^TK_pe_p -e_v^T(K_v-\alpha I_3)e_v - c^2 e_R^T K_R e_R - \alpha e_p^T K_v e_v \nonumber \\
-    &\;\;\;\;+ \alpha s^2 k_p|e_p|^2 + s^2k_v|e_v|^2 + s^2(\alpha k_v + k_p)|e_p||e_v| + s^2(|e_v| + \alpha|e_p|)B \nonumber \\ 
-    &< e_p^T(-\alpha K_p + \alpha s^2 k_p I_3)e_p + e_v^T(-K_v+(\alpha + s^2 k_v) I_3)e_v - c^2 e_R^T K_R e_R \nonumber \\
-    &\;\;\;\;- \alpha e_p^T K_v e_v + s^2(\alpha k_v + k_p)(\frac{a_1}{2}|e_p|^2 + \frac{a_2}{2}|e_v|^2) + s^2B(\frac{a_3+a_5}{2} + \frac{a_4}{2}|e_v|^2 +\frac{\alpha a_6}{2}|e_p|^2) \nonumber 
-\end{align}
-where $c$ and $s$ are parameters satisfying $c^4 = 1 - e_R^T e_R$ and $s^4 = e_R^Te_R$. Also, $k_v$ and $k_p$ are maximum eigenvalues of $K_v$ and $K_p$, respectively. 
-To satisfy Young's inequality, $a_1a_2 = 1$, $a_3a_4 = 1$, $a_5a_6 = 1$.
+%The attitude error function is defined as $\Psi = \frac{1}{2}\text{tr}(I_3 - R_d^TR)$, and the dynamics of the error function is 
+%\begin{align}
+%\Psi &= \frac{1}{2}\text{tr}(I_3 - R_d^TR) \nonumber \\
+%\dot{\Psi} &=  -\frac{1}{2}\text{tr}(R_d^TR\hat{e}_\omega) \nonumber \\
+%&=  -\frac{1}{4}\text{tr}(-\hat{e}_\omega R^T R_d + R_d^T R \hat{e}_\omega) \nonumber \\
+%&= -\frac{1}{4}\text{tr}(\hat{e}_\omega(R_d^TR - R^TR_d)) \nonumber \\
+%&= -\frac{1}{2}\text{tr}(\hat{e}_\omega \hat{e}_R) \nonumber \\
+%&= e_R^Te_\omega \nonumber 
+%\end{align}
+%where $e_R = \frac{1}{2} (R_d^T R-R^T R_d) ^\vee$ and $e_\omega = \omega - R^TR_d\omega_d = \omega - \omega_d^R$.
+%
+%Actually, $e_R$ could be interpreted in the following way
+%\begin{align}
+%R^TR_d &= I_3 + \sin\theta \hat{K} + (1-\cos\theta)\hat{K}^2 \nonumber \\
+%\hat{e}_R &= \frac{1}{2} (I_3 - \sin\theta \hat{K} + (1-\cos\theta)\hat{K}^2 - I_3 - \sin\theta \hat{K} -(1-\cos\theta)\hat{K}^2) \nonumber \\
+%&= -\sin\theta\hat{K} \nonumber \\
+%e_R &= -\sin\theta K \nonumber
+%\end{align}
+%
+%If the angular velocity is designed to be $\omega = -K_Re_R + \omega_d^R$, the error $e_\omega$ becomes as $e_\omega = -K_Re_R$. Also, the attitude error dynamics becomes as
+%\begin{equation}
+%\dot{\Psi} = -e_R^TK_Re_R. \nonumber
+%\end{equation}
+%
+%The error dynamics $\dot{e}_R$ is derived as
+%\begin{align}
+%\dot{e}_R &= \frac{1}{2}(R_d^T R \hat{e}_\omega +\hat{e}_\omega R^T R_d)^\vee \nonumber \\
+%&= \frac{1}{2}(\text{tr}(R^TR_d)I_3 - R^TR_d)e_\omega \nonumber \\
+%&= C(R^TR_d)e_\omega \nonumber
+%\end{align}
+%where $C =  \frac{1}{2}(\text{tr}(R^TR_d)I_3 - R^TR_d)$, $\dot{R}_d = R_d\text{S}(\omega_d)$ and $\omega_d^R = R^TR_d\omega_d$. 
+%The matrix $C(R^TR_d)$ is further analyzed as follows:
+%\begin{align}
+%C(R^TR_d) &= \frac{1}{2}\{(1+2\cos\theta)I_3 - (I_3 + \sin\theta\hat{K} + (1-\cos\theta)\hat{K}^2)\} \nonumber \\
+%&= \cos\theta I_3 +\frac{1}{2}\{-\sin\theta\hat{K} - (1-\cos\theta)\hat{K}^2\} \nonumber \\
+%&= \cos\theta I_3 +\frac{1}{2}\{ \hat{e}_R -\frac{1-\cos\theta}{\sin^2\theta}\hat{e}_R^2\} \nonumber \\
+%&= \cos\theta I_3 +\frac{1}{2}\{ \hat{e}_R -\frac{1}{1+\cos\theta}\hat{e}_R^2\} \nonumber
+%\end{align}
+%
+%In addition, the determinant $\text{det}(C(R^TR_d)) = 4\cos\theta(\cos\theta + 1)$ where $\theta$ is the rotation angle from $R_d$ to $R$.
+%
+%Therefore, the error dynamics $\dot{e}_R$ could be further analyzed by setting $\omega = -K_Re_K + \omega_d^R$ as follows:
+%\begin{align}
+%\dot{e}_R &= C(R^TR_d)e_\omega \nonumber \\
+%&= -C(R^TR_d)K_Re_R \nonumber \\
+%    %&= -(2\cos\theta I_3 + \hat{e}_R + \frac{1}{1+\cos\theta}\hat{e}_R^2)K_Re_R \nonumber
+%    &= -(\cos\theta I_3 + \frac{1}{2}\{\hat{e}_R - \frac{1}{1+\cos\theta}\hat{e}_R^2\})K_Re_R \nonumber
+%\end{align}
+%
+%If the Lyapunov candidate is set as $V_R = \frac{1}{2}e_R^Te_R$, the directional time derivative of the function becomes:
+%\begin{align}
+%    \dot{V}_R &= e_R^T\dot{e}_R \nonumber \\
+%    &= -e_R^T(\cos\theta I_3 + \frac{1}{2}\{\hat{e}_R - \frac{1}{1+\cos\theta}\hat{e}_R^2\})K_Re_R \nonumber \\
+%    &= -\cos\theta \cdot e_R^T K_Re_R \nonumber
+%\end{align}
+%
+%Let me start Lyapunov stability analysis for the whole system.
+%\begin{equation}
+%    V = \frac{1}{2}\{e_p^TK_pe_p + e_v^Te_v + e_R^Te_R\}+ \alpha e_p^T e_v\nonumber
+%\end{equation}
+%
+%\begin{align}
+%    \dot{V} &= e_p^T K_p\dot{e}_p + e_v^T \dot{e}_v + e_R^T \dot{e}_R + \alpha e_p^T \dot{e}_v + \alpha e_v^T \dot{e}_p \nonumber \\
+%    &= e_p^T K_pe_v + e_v^T \left\{ -K_pe_p -K_ve_v + \frac{|n_d|}{m}\left[ (e_3^TR_d^TRe_3)Re_3-R_de_3 \right] \right\} -\cos\theta\cdot e_R^T K_R e_R  \nonumber \\
+%    &\;\;\;\;+\alpha e_v^T e_v + \alpha e_p^T \left\{ -K_pe_p -K_ve_v + \frac{|n_d|}{m} \left[ (e_3^TR_d^TRe_3)Re_3-R_de_3 \right] \right\}\nonumber \\
+%    &< -e_v^T K_v e_v + s^2 \frac{|e_v||n_d|}{m} - c^2 e_R^TK_Re_R + \alpha e_v^T e_v -\alpha e_p^TK_p e_p -\alpha e_p^TK_ve_v +\alpha s^2\frac{|e_p||n_d|}{m} \nonumber \\
+%    &< -\alpha e_p^TK_pe_p -e_v^T(K_v-\alpha I_3)e_v - c^2 e_R^T K_R e_R - \alpha e_p^T K_v e_v + s^2\frac{|e_v| + \alpha|e_p|}{m}|n_d| \nonumber \nonumber \\
+%    &< -\alpha e_p^TK_pe_p -e_v^T(K_v-\alpha I_3)e_v - c^2 e_R^T K_R e_R - \alpha e_p^T K_v e_v \nonumber \\
+%    &\;\;\;\;+ s^2(|e_v| + \alpha|e_p|)(K_p|e_p| + K_v |e_v| + B) \nonumber \\ 
+%    &< -\alpha e_p^TK_pe_p -e_v^T(K_v-\alpha I_3)e_v - c^2 e_R^T K_R e_R - \alpha e_p^T K_v e_v \nonumber \\
+%    &\;\;\;\;+ \alpha s^2 k_p|e_p|^2 + s^2k_v|e_v|^2 + s^2(\alpha k_v + k_p)|e_p||e_v| + s^2(|e_v| + \alpha|e_p|)B \nonumber \\ 
+%    &< e_p^T(-\alpha K_p + \alpha s^2 k_p I_3)e_p + e_v^T(-K_v+(\alpha + s^2 k_v) I_3)e_v - c^2 e_R^T K_R e_R \nonumber \\
+%    &\;\;\;\;- \alpha e_p^T K_v e_v + s^2(\alpha k_v + k_p)(\frac{a_1}{2}|e_p|^2 + \frac{a_2}{2}|e_v|^2) + s^2B(\frac{a_3+a_5}{2} + \frac{a_4}{2}|e_v|^2 +\frac{\alpha a_6}{2}|e_p|^2) \nonumber 
+%\end{align}
+%where $c$ and $s$ are parameters satisfying $c^4 = 1 - e_R^T e_R$ and $s^4 = e_R^Te_R$. Also, $k_v$ and $k_p$ are maximum eigenvalues of $K_v$ and $K_p$, respectively. 
+%To satisfy Young's inequality, $a_1a_2 = 1$, $a_3a_4 = 1$, $a_5a_6 = 1$.
 
 \newpage
 By designing proper attitude controller for a multirotor, we can make the attitude error of the multirotor bounded.
 Based on this, the norm of the attitude error could be assumed to be bounded such as $|e_R| \leq E_R$.
 Then, we can evaluate the Lyapunov function only with translational dynamics of the multirotor as follows:
 \begin{equation}
-    V = \frac{1}{2}\left[
+    V = \frac{1}{2} \left[
         \begin{array}{cc}
         e_p^T & e_v^T
         \end{array}
@@ -146,11 +146,13 @@ Then, we can evaluate the Lyapunov function only with translational dynamics of 
 		\end{array}
 		\right]. \nonumber
 \end{equation}
-Define error vector as $e = [e_p;e_v]$. And the function could be written as $V=\frac{1}{2}e^TPe$.
-
-The directional time derivative is computed as follows:
+Define error vector as $e = [e_p;e_v]$. Then the Lyapunov function could be written in the following form:
+\begin{equation}
+V=\frac{1}{2}e^TPe. \nonumber
+\end{equation}
+Also, the directional time derivative is computed as follows:
 \begin{align}
-\dot{V} &= e^TP\dot{e} +\frac{1}{2}e^T\dot{P}e\nonumber \\
+\dot{V} &= e^TP\dot{e} + \frac{1}{2}e^T\dot{P}e\nonumber \\
 &= e^TP\left[
 \begin{array}{l}
 e_v \\ -K_pe_p -K_ve_v + \frac{|n_d|}{m}\{(e_3^TR_d^TRe_3)R_de_3-Re_3\} 
@@ -166,15 +168,15 @@ e^TP\left[
 0_{31} \\ \frac{|n_d|}{m}\{(e_3^TR_d^TRe_3)R_de_3-Re_3\} 
 \end{array}
 \right] +\frac{1}{2}e^T\dot{P}e\nonumber \\
-&= e^TPAe + |-K_p e_p -K_v e_v - ge_3 + \dot{v}_r|e^T
+&= \frac{1}{2}e^TPAe + |-K_p e_p -K_v e_v - ge_3 + \dot{v}_r|e^T
 \left[
 \begin{array}{c}
 P_{pv} \\ P_v
 \end{array}
 \right]
 \{(e_3^TR_d^TRe_3)R_de_3-Re_3\} +\frac{1}{2}e^T\dot{P}e\nonumber \\
-&\leq e^TPAe+ E_R(p_{pv}|e_p|+p_v|e_v|)(k_p|e_p|+k_v|e_v|+B)+\frac{1}{2}e^T\dot{P}e \nonumber  \\
-&\leq e^TPAe+ E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B)+\frac{1}{2}e^T\dot{P}e \nonumber
+&\leq \frac{1}{2}e^TPAe+ E_R(p_{pv}|e_p|+p_v|e_v|)(k_p|e_p|+k_v|e_v|+B)+\frac{1}{2}e^T\dot{P}e \nonumber  \\
+&\leq \frac{1}{2}e^TPAe+ E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B)+\frac{1}{2}e^T\dot{P}e \nonumber
 %&\leq e^TPAe \nonumber \\
 %&\;\;\;\;+E_R\{p_{pv}k_p |e_p|^2+(p_{pv}k_v+p_vk_p)|e_p||e_v|+p_vk_v|e_v|^2 +B(p_{pv}|e_p|+p_v|e_v|)\}\nonumber \\
 %&\leq e^TPAe \nonumber \\
@@ -192,28 +194,44 @@ Not to make the norm of $e_p$ and $e_v$ too large by applying Young's inequality
 
 Formulate the optimization problem for generating funnel:
 \begin{align}
-V &= e^TPe,\;\;P = P^T >0 \nonumber \\
-\dot{V} &\leq e^T(PA + A^TP)e+ 2E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B)+e^T\dot{P}e \nonumber
+V &= \frac{1}{2}e^TPe,\;\;P = P^T >0 \nonumber \\
+\dot{V} &\leq \frac{1}{2}e^T(PA + A^TP)e+ E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B)+\frac{1}{2}e^T\dot{P}e \nonumber
 \end{align}
 
+According to [MAJ16], definition of funnel could be written as follows:
+\begin{equation}
+e(0) \in \mathcal{E}_0 \Longrightarrow e(t) \in F(t),\;\; \forall t \in [0,T]. \nonumber
+\end{equation}
+Therefore, the funnel can be considered as a sublevel set of nonnegative time varying function $V:[0,T]\times \mathbb{R}^6 \rightarrow \mathbb{R}^+$
+\begin{equation}
+F(t) = \{e(t) \in \mathbb{R}^6\; |\; V(t,e(t)) \leq \rho(t)\}. \nonumber
+\end{equation}
+By setting $\mathcal{E}_0 \subset F(0)$, the definition of funnel is satisfied by the following constraint:
+\begin{equation}
+V(t,e) = \rho(t) \Longrightarrow \dot{V}(t,e) \leq \dot{\rho}(t),\;\;\forall t \in [0,T]. \nonumber
+\end{equation}
+The constraint means that $V(t,e) = \rho(t)$ grows slower than $\rho(t)$. Accordingly, the error at $V(t,e) = \rho(t)$ will remain in the subset $F(t) = \{e(t) \in \mathbb{R}^6\;|\;V(t,e(t)) \leq \rho(t)\}$. 
+Therefore, the boundary satisfying $V(t,e) = \rho(t)$ is the funnel.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+I want to find tight (realistic) outer approximation of the funnel.
+It can be written as the following optimization problem:
+\begin{equation}
+\begin{array}{ll}
+\inf_{P(t),\rho(t)} &\displaystyle \int_0^T vol(F(t))dt \\ 
+\text{s.t.} & V(t,e) = \rho(t) \Longrightarrow \dot{V}(t,e) \leq \dot{\rho}(t), \\
+            & \mathcal{E}_0 \subset F(0,e). 
+\end{array} \nonumber
+\end{equation}
+Assume that the initial condition set $\mathcal{E}_0$ could be summarized in the following inequality constraints:
+\begin{equation}
+\mathcal{E}_0 = \{e\in\mathbb{R}^6 \;|\; g_{0,i} \geq 0, \;\;\forall i = 1,\cdots,n_0\}.
+\nonumber
+\end{equation}
+Then the constraints become as
+\begin{align}
+V(t,e) = \rho(t) &\Longrightarrow  \dot{\rho}(t) - \dot{V}(t,e) \geq 0, \nonumber\\
+g_{0,i} \geq 0 &\Longrightarrow \rho(0) - V(0,e) \geq 0.  \nonumber 
+\end{align}
 
 
 
