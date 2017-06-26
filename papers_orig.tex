@@ -32,28 +32,20 @@ Error dynamics
 \dot{e}_v &= ge_3 + \frac{T}{m}Re_3 - \dot{v}^r. \nonumber 
 \end{align}
 
-Here, we assume that the state feedback contains the state uncertainties as
-\begin{equation}
-  \begin{array}{cc}
-    \hat{e}_p = e_p + \tilde{e}_p, & \hat{e}_v = e_v + \tilde{e}_v 
-  \end{array} \nonumber
-\end{equation}
-
 The collective thrust $T$ is designed as
 \begin{align}
-  n_d &= m(-K_p\hat{e}_p - K_v\hat{e}_v -ge_3 + \dot{v}^r) \nonumber \\
-  R_de_3 &= \frac{n_d}{|n_d|}  \nonumber \\
-  T &= n_d^TRe_3 \nonumber \\
-  &= |n_d| (e_3^TR_d^TRe_3). \nonumber
+n_d &= m(-K_pe_p - K_ve_v -ge_3 + \dot{v}^r) \nonumber \\
+R_de_3 &= \frac{n_d}{|n_d|}  \nonumber \\
+T &= n_d^TRe_3 \nonumber \\
+&= |n_d| (e_3^TR_d^TRe_3). \nonumber
 \end{align}
 
 The error dynamics for $e_v$ with the collective thrust
 \begin{align}
-  \dot{e}_v &= ge_3 - \dot{v}^r + \frac{n_d}{m} +\frac{T}{m}Re_3 - \frac{n_d}{m}\nonumber \\
-  &= ge_3 - \dot{v}^r  - K_p\hat{e}_p - K_v\hat{e}_v -ge_3 + \dot{v}^r +\frac{T}{m}Re_3 - \frac{n_d}{m} \nonumber  \\
-  &= -K_p\hat{e}_p-K_v\hat{e}_v + \frac{1}{m}(n_d^TRe_3)Re_3 -\frac{n_d}{m} \nonumber \\
-  &= -K_p\hat{e}_p-K_v\hat{e}_v + \frac{|n_d|}{m}\{(e_3^TR_d^TRe_3)Re_3 - R_de_3\}. \nonumber \\
-	&= -K_p\hat{e}_p-K_v\hat{e}_v + |-K_p\hat{e}_p-K_v\hat{e}_v - ge_3 + \dot{v}^r|\{(e_3^TR_d^TRe_3)Re_3 - R_de_3\} \nonumber
+\dot{e}_v &= ge_3 - \dot{v}^r + \frac{n_d}{m} +\frac{T}{m}Re_3 - \frac{n_d}{m}\nonumber \\
+ &= ge_3 - \dot{v}^r  - K_pe_p - K_ve_v -ge_3 + \dot{v}^r +\frac{T}{m}Re_3 - \frac{n_d}{m} \nonumber  \\
+&= -K_pe_p -K_ve_v  + \frac{1}{m}(n_d^TRe_3)Re_3 -\frac{n_d}{m} \nonumber \\
+&= -K_pe_p-K_ve_v + \frac{|n_d|}{m}\{(e_3^TR_d^TRe_3)Re_3 - R_de_3\}. \nonumber
 \end{align}
 
 %The attitude error function is defined as $\Psi = \frac{1}{2}\text{tr}(I_3 - R_d^TR)$, and the dynamics of the error function is 
@@ -142,21 +134,21 @@ Based on this, we suppose that
 \end{equation}
 Then, we can evaluate the Lyapunov function only with translational dynamics of the multirotor as follows:
 \begin{equation}
-V = \left[
-\begin{array}{cc}
-e_p^T & e_v^T
-\end{array}
-\right] 
-\left[
-\begin{array}{cc}
-P_p & P_{pv} \\ P_{pv}^T & P_v
-\end{array}
-\right]
-\left[
-\begin{array}{c}
-e_p \\ e_v
-\end{array}
-\right]. \nonumber
+    V = \left[
+        \begin{array}{cc}
+        e_p^T & e_v^T
+        \end{array}
+        \right] 
+        \left[
+        \begin{array}{cc}
+		P_p & P_{pv} \\ P_{pv}^T & P_v
+        \end{array}
+        \right]
+		\left[
+		\begin{array}{c}
+		e_p \\ e_v
+		\end{array}
+		\right]. \nonumber
 \end{equation}
 Define error vector as $e = [e_p;e_v]$. Then the Lyapunov function could be written in the following form:
 \begin{equation}
@@ -165,26 +157,21 @@ V=e^TPe. \nonumber
 Also, the directional time derivative is computed as follows:
 \begin{align}
 \dot{V} &= \dot{e}^TPe + e^TP\dot{e} + e^T\dot{P}e\nonumber \\
-%&= e^T(PA+A^TP)e + 
-%2e^TP\left[
-%\begin{array}{c}
-%0_{31} \\ -K_p\tilde{e}_p - K_v \tilde{e}_v+\frac{|n_d|}{m}\sin\Phi u 
-%\end{array}
-%\right] +e^T\dot{P}e\nonumber \\
-&= e^TQe -2 e^T\left[
+&= e^T(PA+A^TP)e + 
+2e^TP\left[
 \begin{array}{c}
-P_{pv} \\ P_{v}
+0_{31} \\ \frac{|n_d|}{m}\sin\Phi u 
 \end{array}
-\right](K_p \tilde{e}_p +K_v\tilde{e}_v) \nonumber \\
-&\;\;\;	+2E_R|-K_p e_p -K_v e_v -K_p\tilde{e}_p - K_v\tilde{e}_v - ge_3 + \dot{v}_r|e^T
+\right] +e^T\dot{P}e\nonumber \\
+&= e^T(PA+A^TP)e + 2\sin\Phi|-K_p e_p -K_v e_v - ge_3 + \dot{v}_r|e^T
 \left[
 \begin{array}{c}
 P_{pv} \\ P_v
 \end{array}
 \right]u
 + e^T\dot{P}e\nonumber \\
-&\leq e^TQe+ 2(p_{pv}|e_p|+p_v|e_v|)\{K\tilde{E} + E_R(k_p|e_p|+k_v|e_v|+ K\tilde{E}+B)\}+e^T\dot{P}e \nonumber  \\
-&\leq e^TQe+ 2(p_{pv}\bar{e}_p+p_v\bar{e}_v)\{K\tilde{E} + E_R(k_p\bar{e}_p+k_v\bar{e}_v+K\tilde{E}+B)\}+e^T\dot{P}e \nonumber
+&\leq e^T(PA+A^TP)e+ 2E_R(p_{pv}|e_p|+p_v|e_v|)(k_p|e_p|+k_v|e_v|+B)+e^T\dot{P}e \nonumber  \\
+&\leq e^T(PA+A^TP)e+ 2E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B)+e^T\dot{P}e \nonumber
 %&= e^TP\left[
 %\begin{array}{l}
 %e_v \\ -K_pe_p -K_ve_v + \frac{|n_d|}{m}\{(e_3^TR_d^TRe_3)R_de_3-Re_3\} 
@@ -218,14 +205,7 @@ P_{pv} \\ P_v
 %&\leq e^TPAe \nonumber \\
 %&\;\;\;\;+E_R\{p_{pv}k_p|e_p|^2+p_vk_v|e_v|^2\} + E_R\{(p_{pv}k_v+p_vk_p)E_pE_v + B(p_{pv}E_p+p_vE_v)\} \nonumber 
 \end{align}
-where $Q = PA + A^TP$, $\bar{e}_p = |e|_p$, $\bar{e}_v = |e|_v$, $B = |ge_3-\dot{v}_r|$, and 
-\begin{equation}
-	A = \left[
-		\begin{array}{cc}
-			0_{33} & I_3 \\ -K_p & -K_v
-		\end{array}
-		\right]. \nonumber
-\end{equation}
+where $\bar{e}_p = |e|_p$, $\bar{e}_v = |e|_v$, and $B = |ge_3-\dot{v}_r|$.
 
 Not to make the norm of $e_p$ and $e_v$ too large by applying Young's inequality, I will treat $\bar{e}_p$ and $\bar{e}_v$ as the variables satisfying the following constraints
 \begin{align}
@@ -236,7 +216,7 @@ Not to make the norm of $e_p$ and $e_v$ too large by applying Young's inequality
 Formulate the optimization problem for generating funnel:
 \begin{align}
 V &= e^TPe,\;\;P = P^T >0 \nonumber \\
-\dot{V} &\leq e^TQe+ 2(p_{pv}\bar{e}_p+p_v\bar{e}_v)\{K\tilde{E} + E_R(k_p\bar{e}_p+k_v\bar{e}_v+K\tilde{E} + B)\}+e^T\dot{P}e. \nonumber
+\dot{V} &\leq e^T(PA + A^TP)e+ E_R(p_{pv}\bar{e}_p+p_v\bar{e}_v)(k_p\bar{e}_p+k_v\bar{e}_v+B)+e^T\dot{P}e. \nonumber
 \end{align}
 \newpage
 According to [MAJ16], the definition of funnel could be written as follows:
